@@ -37,7 +37,7 @@
 					<p>把对方的“邀请码”粘贴到下方，点击生成回复码：</p>
 					<textarea id="txtyq" rows="6" cols="60"></textarea>
 					<br>
-					<button onclick="hd()" class="login-btn" style="width:auto;padding:10px 20px;">生成回复码</button>
+					<button onclick="sheng()" class="login-btn" style="width:auto;padding:10px 20px;">生成回复码</button>
 					<p style="display:none;" id="hhb">请把下方“回复码”发回给对方：</p>
 					<textarea id="txthf" rows="6" cols="60" readonly style="display:none;margin:10px auto;"></textarea>
 					<br>
@@ -458,7 +458,7 @@
 				}
 			}
 
-			async function hd() {
+			async function sheng() {
 				try {
 					var data = JSON.parse(document.getElementById('txtyq').value);
 					await pc.setRemoteDescription(new RTCSessionDescription({
