@@ -346,10 +346,17 @@
 				});
 			}
 
+			function normSdp(sdp) {
+				return String(sdp).replace(/\r\n/g, '\n').replace(/\n/g, '\r\n');
+			}
+
 			async function hb() {
 				try {
 					var data = JSON.parse(document.getElementById('txthd').value);
-					await pc.setRemoteDescription(new RTCSessionDescription(data.s));
+					await pc.setRemoteDescription(new RTCSessionDescription({
+						type: data.s.type,
+						sdp: normSdp(data.s.sdp)
+					}));
 					document.getElementById('conn').textContent = '正在建立连接...';
 				} catch (e) {
 					console.error(e);
@@ -360,7 +367,10 @@
 			async function hd() {
 				try {
 					var data = JSON.parse(document.getElementById('txtyq').value);
-					await pc.setRemoteDescription(new RTCSessionDescription(data.s));
+					await pc.setRemoteDescription(new RTCSessionDescription({
+						type: data.s.type,
+						sdp: normSdp(data.s.sdp)
+					}));
 					var answer = await pc.createAnswer();
 					await pc.setLocalDescription(answer);
 					await gatherWait();
