@@ -32,7 +32,7 @@
 					<br>
 					<button onclick="hd()" class="login-btn" style="width:auto;padding:10px 20px;">生成回复码</button>
 					<p style="display:none;" id="hhb">请把下方“回复码”发回给对方：</p>
-					<textarea id="txthf" rows="6" cols="60" readonly style="display:none;"></textarea>
+					<textarea id="txthf" rows="6" cols="60" readonly style="display:none;margin:10px auto;"></textarea>
 					<br>
 					<button onclick="copyTxt('txthf')" class="bu" id="bhfcopy" style="display:none;">复制回复码</button>
 				</div>
@@ -718,7 +718,9 @@
 				jnxs();
 				document.getElementById("mqhh").textContent = '当前是第' + hh + "回合";
 				timer.reset();
-				timer.start();
+				if (started) {
+					timer.start();
+				}
 			}
 
 			function cklscz() {
