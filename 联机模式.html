@@ -93,7 +93,7 @@
 					<button onclick="ssss(9)" id="j9">能量刀</button>
 				</div>
 				<p></p>
-				<button onclick="cz()">重置</button>
+				<button onclick="cz()" id="czbtn">重置</button>
 
 				<p id="sjj"></p>
 				<button onclick="zy()" class="login-btn">返回主页</button>
@@ -186,6 +186,7 @@
 			var jj7 = document.getElementById('j7');
 			var jj8 = document.getElementById('j8');
 			var jj9 = document.getElementById('j9');
+			var czbtn = document.getElementById('czbtn');
 
 			var a1 = 1;
 			var aa1 = 0;
@@ -223,6 +224,7 @@
 			var myShow = '';
 			var peerShow = '';
 			var started = false;
+			var gameOver = false;
 
 			try {
 				aa = Number(sessionStorage.getItem('aa')) || 1;
@@ -409,6 +411,7 @@
 					f2 = m.move;
 					roundOk();
 				} else if (m.t === 'reset') {
+					alert('对方已重置对局，重新开始');
 					ss();
 				}
 			}
@@ -463,6 +466,8 @@
 				myShow = '';
 				peerShow = '';
 				started = false;
+				gameOver = false;
+				czbtn.disabled = true;
 				document.getElementById("result").textContent = '';
 				timer.reset();
 				if (ljReady) {
@@ -472,7 +477,7 @@
 
 			function jxInit() {
 				jnSkin();
-				g();
+				lockBtns();
 				j();
 			}
 
@@ -736,7 +741,7 @@
 				jnxs();
 				document.getElementById("mqhh").textContent = '当前是第' + hh + "回合";
 				timer.reset();
-				if (started) {
+				if (started && !gameOver) {
 					timer.start();
 				}
 			}
@@ -746,6 +751,9 @@
 			}
 
 			function cz() {
+				if (!gameOver) {
+					return;
+				}
 				ss();
 				sendMsg({
 					t: 'reset'
@@ -841,7 +849,9 @@
 				t15.disabled = true;
 				t16.disabled = true;
 				timer.reset();
-				document.getElementById("mqhh").textContent = '当前是第' + hh + "回合";
+				gameOver = true;
+				czbtn.disabled = false;
+				j();
 			}
 
 			window.onload = function() {
