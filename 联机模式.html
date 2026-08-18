@@ -347,7 +347,7 @@
 			async function hb() {
 				try {
 					var data = JSON.parse(document.getElementById('txthd').value);
-					await pc.setRemoteDescription(data.s);
+					await pc.setRemoteDescription(new RTCSessionDescription(data.s));
 					document.getElementById('conn').textContent = '正在建立连接...';
 				} catch (e) {
 					console.error(e);
@@ -358,7 +358,7 @@
 			async function hd() {
 				try {
 					var data = JSON.parse(document.getElementById('txtyq').value);
-					await pc.setRemoteDescription(data.s);
+					await pc.setRemoteDescription(new RTCSessionDescription(data.s));
 					var answer = await pc.createAnswer();
 					await pc.setLocalDescription(answer);
 					await gatherWait();
