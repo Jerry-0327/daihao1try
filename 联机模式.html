@@ -9,11 +9,18 @@
 	<body>
 
 		<h1>☠️代号一☠️</h1>
-		<div id='content'>
+		<div id='content'>，
 			<div id='dati'>
 				<h1>联机大厅</h1>
 				<p>两人通过浏览器点对点对战（无需服务器）。</p>
-				<p>一方点「创建房间」复制邀请码发给对方，另一方点「加入房间」粘贴邀请码并生成回复码发回，连接成功后自动进入游戏。</p>
+				<p>一方点「创建房间」选择模式后生成邀请码发给对方，另一方「加入房间」粘贴邀请码并生成回复码发回，连接成功后自动进入游戏。</p>
+				<p style="display:inline-block;width:120px;">选择模式（创建方）：</p>
+				<p></p>
+				<button onclick="xzmb(1)" class="bu" id="mb1">普通模式</button>
+				<button onclick="xzmb(2)" class="bu" id="mb2">额外模式</button>
+				<button onclick="xzmb(3)" class="bu" id="mb3">快速模式</button>
+				<button onclick="xzmb(4)" class="bu" id="mb4">血量模式</button>
+				<p id="mbxs">当前模式：普通模式</p>
 				<button onclick="cr()" class="login-btn" id="bcr" style="width:auto;padding:10px 20px;">创建房间</button>
 				<button onclick="jr()" class="login-btn" id="bjr" style="width:auto;padding:10px 20px;">加入房间</button>
 				<div id="bhb" style="display:none;">
@@ -112,6 +119,43 @@
 
 			function zy() {
 				window.location.href = "主页.html";
+			}
+
+			function xzmb(x) {
+				var names = ["普通模式", "额外模式", "快速模式", "血量模式"];
+				for (var i = 1; i <= 4; i++) {
+					document.getElementById('mb' + i).disabled = (i === x);
+				}
+				if (x === 1) {
+					hd = false;
+					ksms = false;
+					xlms = false;
+					aa = 1;
+					szsj = 10000;
+					mqms = "普通模式";
+				} else if (x === 2) {
+					hd = true;
+					ksms = false;
+					xlms = false;
+					aa = 1;
+					szsj = 10000;
+					mqms = "额外模式";
+				} else if (x === 3) {
+					hd = false;
+					ksms = true;
+					xlms = false;
+					aa = 1;
+					szsj = 5000;
+					mqms = "快速模式";
+				} else if (x === 4) {
+					hd = false;
+					ksms = false;
+					xlms = true;
+					aa = 2;
+					szsj = 10000;
+					mqms = "血量模式";
+				}
+				document.getElementById('mbxs').textContent = '当前模式：' + mqms;
 			}
 
 			function copyTxt(id) {
@@ -215,6 +259,10 @@
 			var aa = 1;
 			var szsj = 10000;
 			var lscz = true;
+			var mqms = "普通模式";
+			var hd = false;
+			var ksms = false;
+			var xlms = false;
 			var wj = 1;
 			var ljReady = false;
 			var mySkillSent = false;
@@ -228,8 +276,30 @@
 
 			try {
 				aa = Number(sessionStorage.getItem('aa')) || 1;
+				szsj = Number(sessionStorage.getItem('szsj')) || 10000;
 			} catch (e) {
 				aa = 1;
+				szsj = 10000;
+			}
+			try {
+				mqms = JSON.parse(sessionStorage.getItem('mqms')) || "普通模式";
+			} catch (e) {
+				mqms = "普通模式";
+			}
+			try {
+				hd = JSON.parse(sessionStorage.getItem('hd')) || false;
+			} catch (e) {
+				hd = false;
+			}
+			try {
+				ksms = JSON.parse(sessionStorage.getItem('ksms')) || false;
+			} catch (e) {
+				ksms = false;
+			}
+			try {
+				xlms = JSON.parse(sessionStorage.getItem('xlms')) || false;
+			} catch (e) {
+				xlms = false;
 			}
 			aaa1 = aa;
 			aaa2 = aa;
@@ -243,10 +313,27 @@
 				document.getElementById('yx').style.display = 'block';
 				document.getElementById('wjdw').style.display = 'block';
 				document.getElementById('wjbh').textContent = wj;
+				document.getElementById('msms').textContent = '目前模式：联机·' + mqms;
 				ljReady = true;
-				ss();
-				jnSkin();
-				j();
+				if (wj === 1) {
+					sendMsg({
+						t: 'cfg',
+						mqms: mqms,
+						aa: aa,
+						szsj: szsj,
+						ksms: ksms,
+						xlms: xlms,
+						hd: hd
+					});
+					ss();
+					jnSkin();
+					j();
+				} else {
+					document.getElementById('conn').textContent = '等待对方分享模式配置...';
+					csh();
+					lockBtns();
+					j();
+				}
 			}
 
 			function delay(ms) {
@@ -288,7 +375,8 @@
 					document.getElementById('bhb').style.display = 'block';
 				} catch (e) {
 					console.error(e);
-					alert('创建房间失败：' + e.message + '\n\nWebRTC 需要合法的 http/https 来源。请通过本地服务器或 GitHub Pages 访问本页面，不要在 file:// 下直接打开。');
+					alert('创建房间失败：' + e.message +
+						'\n\nWebRTC 需要合法的 http/https 来源。请通过本地服务器或 GitHub Pages 访问本页面，不要在 file:// 下直接打开。');
 					document.getElementById('bcr').disabled = false;
 					document.getElementById('bjr').disabled = false;
 				}
@@ -413,26 +501,90 @@
 				} else if (m.t === 'reset') {
 					alert('对方已重置对局，重新开始');
 					ss();
+				} else if (m.t === 'cfg') {
+					mqms = m.mqms;
+					aa = m.aa;
+					szsj = m.szsj;
+					ksms = m.ksms;
+					xlms = m.xlms;
+					hd = m.hd;
+					aaa1 = aa;
+					aaa2 = aa;
+					document.getElementById('msms').textContent = '目前模式：联机·' + mqms;
+					ss();
+					jnSkin();
+					j();
 				}
 			}
 
 			function csh() {
-				document.getElementById("h4").style.display = "inline-block";
-				document.getElementById("h5").style.display = "inline-block";
-				document.getElementById("h6").style.display = "inline-block";
-				document.getElementById("h8").style.display = "inline-block";
-				if (aa >= 3) {
-					document.getElementById("h13").style.display = "inline-block";
-				} else {
+				var jnjn = document.getElementById("jnjn");
+				var j0 = document.getElementById("j0");
+				if (mqms === "额外模式") {
+					document.getElementById("h4").style.display = "inline-block";
+					document.getElementById("h5").style.display = "inline-block";
+					document.getElementById("h6").style.display = "inline-block";
+					document.getElementById("h8").style.display = "inline-block";
+					document.getElementById("h10").style.display = "inline-block";
+					document.getElementById("h11").style.display = "inline-block";
+					document.getElementById("h12").style.display = "inline-block";
+					document.getElementById("h14").style.display = "inline-block";
+					document.getElementById("h15").style.display = "inline-block";
+					document.getElementById("h16").style.display = "inline-block";
+					if (aa >= 3) {
+						document.getElementById("h13").style.display = "inline-block";
+					} else {
+						document.getElementById("h13").style.display = "none";
+					}
+					jnjn.style.display = "block";
+					j0.style.display = "inline-block";
+				} else if (mqms === "快速模式") {
+					document.getElementById("h4").style.display = "none";
+					document.getElementById("h5").style.display = "none";
+					document.getElementById("h6").style.display = "none";
+					document.getElementById("h8").style.display = "none";
+					document.getElementById("h10").style.display = "none";
+					document.getElementById("h11").style.display = "none";
+					document.getElementById("h12").style.display = "none";
 					document.getElementById("h13").style.display = "none";
+					document.getElementById("h14").style.display = "none";
+					document.getElementById("h15").style.display = "none";
+					document.getElementById("h16").style.display = "none";
+					jnjn.style.display = "none";
+					j0.style.display = "none";
+				} else if (mqms === "血量模式") {
+					document.getElementById("h4").style.display = "none";
+					document.getElementById("h5").style.display = "none";
+					document.getElementById("h6").style.display = "none";
+					document.getElementById("h8").style.display = "none";
+					document.getElementById("h10").style.display = "none";
+					document.getElementById("h11").style.display = "none";
+					document.getElementById("h12").style.display = "none";
+					document.getElementById("h13").style.display = "none";
+					document.getElementById("h14").style.display = "none";
+					document.getElementById("h15").style.display = "inline-block";
+					document.getElementById("h16").style.display = "inline-block";
+					jnjn.style.display = "none";
+					j0.style.display = "none";
+				} else {
+					document.getElementById("h4").style.display = "inline-block";
+					document.getElementById("h5").style.display = "inline-block";
+					document.getElementById("h6").style.display = "inline-block";
+					document.getElementById("h8").style.display = "inline-block";
+					document.getElementById("h10").style.display = "none";
+					document.getElementById("h11").style.display = "none";
+					document.getElementById("h12").style.display = "none";
+					document.getElementById("h14").style.display = "none";
+					document.getElementById("h15").style.display = "none";
+					document.getElementById("h16").style.display = "none";
+					if (aa >= 3) {
+						document.getElementById("h13").style.display = "inline-block";
+					} else {
+						document.getElementById("h13").style.display = "none";
+					}
+					jnjn.style.display = "block";
+					j0.style.display = "inline-block";
 				}
-				document.getElementById("h10").style.display = "none";
-				document.getElementById("h11").style.display = "none";
-				document.getElementById("h12").style.display = "none";
-				document.getElementById("h14").style.display = "none";
-				document.getElementById("h15").style.display = "none";
-				document.getElementById("h16").style.display = "none";
-				document.getElementById("jnjn").style.display = "block";
 			}
 
 			function ss() {
@@ -471,7 +623,11 @@
 				document.getElementById("result").textContent = '';
 				timer.reset();
 				if (ljReady) {
-					jxInit();
+					if (ksms || xlms) {
+						ssss(0);
+					} else {
+						jxInit();
+					}
 				}
 			}
 
@@ -858,11 +1014,13 @@
 				ss();
 				g();
 				j();
+				xzmb(1);
 				document.getElementById('yx').style.display = 'none';
 				document.getElementById('dati').style.display = 'block';
 				document.getElementById('conn').textContent = '请先创建或加入房间';
 				if (location.protocol === 'file:') {
-					document.getElementById('conn').textContent = '⚠️ 当前通过 file:// 打开，WebRTC 会被浏览器拦截。请改用本地服务器访问（在 1.3.0 目录执行 python -m http.server 或 npx http-server），或部署到 GitHub Pages 后通过 https 访问。';
+					document.getElementById('conn').textContent =
+						'⚠️ 当前通过 file:// 打开，WebRTC 会被浏览器拦截。请改用本地服务器访问（在 1.3.0 目录执行 python -m http.server 或 npx http-server），或部署到 GitHub Pages 后通过 https 访问。';
 				}
 			};
 		</script>
