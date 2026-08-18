@@ -220,6 +220,8 @@
 			var peerSkill = null;
 			var myMove = '';
 			var peerMove = '';
+			var myShow = '';
+			var peerShow = '';
 			var started = false;
 
 			try {
@@ -444,6 +446,8 @@
 				peerSkill = null;
 				myMove = '';
 				peerMove = '';
+				myShow = '';
+				peerShow = '';
 				started = false;
 				document.getElementById("result").textContent = '';
 				timer.reset();
@@ -714,7 +718,7 @@
 			function j() {
 				document.getElementById("sj").textContent = '你血' + a1 + '/' + aaa1 + ',敌血' + a2 + '/' + aaa2 + ',你能' + b1 +
 					',敌能' + b2;
-				document.getElementById("sj1").textContent = '你的出招:' + f3 + ',对方出招:' + f2;
+				document.getElementById("sj1").textContent = '你的出招:' + (myShow || '待出') + ',对方出招:' + (peerShow || '待出');
 				jnxs();
 				document.getElementById("mqhh").textContent = '当前是第' + hh + "回合";
 				timer.reset();
@@ -739,14 +743,35 @@
 					return;
 				}
 				f1 = f1x;
-				f3 = f1;
 				myMove = f1;
+				myShow = f1;
+				peerShow = '';
 				document.getElementById('result').textContent = '已出招，等待对方...';
+				lockBtns();
 				sendMsg({
 					t: 'move',
 					move: f1
 				});
 				phaseCheck();
+			}
+
+			function lockBtns() {
+				t1.disabled = true;
+				t2.disabled = true;
+				t3.disabled = true;
+				t4.disabled = true;
+				t5.disabled = true;
+				t6.disabled = true;
+				t7.disabled = true;
+				t8.disabled = true;
+				t9.disabled = true;
+				t10.disabled = true;
+				t11.disabled = true;
+				t12.disabled = true;
+				t13.disabled = true;
+				t14.disabled = true;
+				t15.disabled = true;
+				t16.disabled = true;
 			}
 
 			function jx() {
@@ -762,8 +787,9 @@
 				c2 = res[7];
 				sxjs1 = res[8];
 				sxjs2 = res[9];
-				f3 = myMove;
 				hh = hh + 1;
+				myShow = myMove;
+				peerShow = peerMove;
 				myMove = '';
 				peerMove = '';
 				if (a2 <= 0 && a1 > 0) {
