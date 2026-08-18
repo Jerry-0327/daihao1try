@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>代号一</title>
+		<link rel="stylesheet" href="样式.css" />
+		<style>
+			.bb {
+				position: fixed;
+				/* 固定定位，相对于浏览器视口 */
+				bottom: 10px;
+				/* 距离底部 30px */
+				right: 10px;
+				using System;
+
+				/* 距离右侧 30px */
+				z-index: 9999;
+				/* 较大的层级，确保不被其他元素遮挡 */
+
+				/* 以下是美化样式（按需修改）
+		    background-color: #007bff;
+		    color: #fff;
+		    padding: 12px 24px;
+		    border-radius: 30px;
+		    font-size: 16px;
+		    font-family: "Microsoft YaHei", sans-serif;
+		    box-shadow: 0 4px 12px rgba(0,0,0,0.15); */
+			}
+
+			.btn-wrapper {
+				position: relative;
+				/* 父容器相对定位 */
+				display: inline-block;
+				margin-bottom: 20px;
+				/* 方便展示下方的控制按钮 */
+			}
+
+			.dot {
+				position: absolute;
+				/* 绝对定位 */
+				top: -6px;
+				/* 右上角偏移 */
+				right: -6px;
+				width: 12px;
+				height: 12px;
+				background-color: #ff4d4f;
+				border-radius: 50%;
+				border: 2px solid #fff;
+				/* 白色描边，更清晰 */
+				box-shadow: 0 0 4px rgba(255, 77, 79, 0.5);
+
+				/* 添加过渡效果，让显隐更平滑（可选）
+		      transition: opacity 0.25s ease, transform 0.25s ease; */
+			}
+
+			.dot.hidden {
+
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+
+
+		<h1>☠️代号一☠️</h1>
+		<div id='content'>
+
+			<div id='zy'>
+				<h2 style="display: inline-block; width: 150px;">更改模式</h2><br>
+				<p>主模式选择</p>
+				<button onclick="mms(1)" class="bu" id='mms1'>正常模式</button>
+				<button onclick="mms(2)" class="bu" id='mms2'>能量模式</button>
+				<button onclick="mms(3)" class="bu" id='mms3'>连胜模式</button>
+				<p></p>
+				<button onclick="tz()" class="bu">挑战模式</button>
+				<button onclick="lx()" class="bu">联机模式</button>
+				<p>子模式选择</p>
+				<button onclick="pt()" class="bu" id='ms2'>普通模式</button>
+				<button onclick="ew()" class="bu" id='ms1'>额外模式</button>
+				<button onclick="ksu()" class="bu" id='ms3'>快速模式</button>
+				<button onclick="xl()" class="bu" id='ms4'>血量模式</button>
+				<button onclick="nl1()" class="bu" id='ms5'>能量模式1</button>
+				<button onclick="nl2()" class="bu" id='ms6'>能量模式2</button>
+				<button onclick="ls1()" class="bu" id='ms7'>快速模式连胜</button>
+
+
+				<br>
+				<p style="display: inline-block; width: 150px;">是否开启隐藏数据</p><button onclick="yck()" class="bu"
+					id='yc1'>是</button><button onclick="ycg()" class="bu" id='yc2'>否</button>
+				<br>
+				<div id="sdxl">
+					<input type="number" id="set" placeholder="设定血量">
+					<button onclick="check()" id="bxl">确认</button>
+				</div>
+
+				<p></p>
+				<div id="sdsj">
+					<input type="number" id="set1" placeholder="设定时间">
+					<button onclick="chec()" id="bsj">确认</button>
+				</div>
+				<p id='jcsj'>基础血量1，基础时间10秒</p>
+				<button onclick="lsjl()">查看历史记录</button>
+				<p></p>
+				<button onclick="gz()">查看规则</button>
+				<p></p>
+				<div class="btn-wrapper">
+					<button onclick="gx()">查看更新</button>
+					<span class="dot" id="redDot"></span> <!-- 红点元素 -->
+				</div>
+
+				<p></p>
+				<button onclick="yx()" class="login-btn">开始游戏</button>
+			</div>
+
+		</div>
+
+
+
+
+
+
+		</div>
+		<button style="padding: 0px 0px;font-size: 4px;" onclick="hsdwx()">查看作者</button>
+		<p class="bb">1.3.0</p>
+		<script>
+			function hsdwx() {
+				window.open("https://space.bilibili.com/500196629")
+			}
+
+			const dot = document.getElementById('redDot');
+
+			function bbgx() {
+
+				if (!localStorage.getItem('bb130')) {
+					// 设置默认值
+					bb130 = false
+				} else {
+					// 安全解析存储的值
+					try {
+						bb130 = JSON.parse(localStorage.getItem('bb130'));
+					} catch {
+						bb130 = false;
+					}
+
+				}
+
+				if (bb130) {
+					dot.classList.add('hidden');
+				}
+			}
+
+
+			document.getElementById("content").style.display = "block";
+			document.getElementById("jcsj").style.display = "block";
+
+
+
+
+			function zy() {
+				document.getElementById("zy").style.display = "block";
+				document.getElementById("yx").style.display = "none";
+			}
+
+			function yx() {
+				zong1 = Number(localStorage.getItem('zong1'));
+				setItem();
+				if (ms == 1) {
+					if (zong1 <= 5) {
+						window.location.href = "新手引导.html"
+					} else {
+						window.location.href = "正常模式.html"
+					}
+				}
+				if (ms == 2) {
+					window.location.href = "能量模式.html"
+				}
+				if (ms == 3) {
+					window.location.href = "连胜模式.html"
+				}
+			}
+
+			function gz() {
+				sessionStorage.setItem('ms', String(ms));
+				console.log(ms);
+				window.location.href = "游戏规则.html";
+
+
+			}
+
+			function gx() {
+				bb130 = true;
+				localStorage.setItem('bb130', JSON.stringify(bb130));
+				dot.classList.add('hidden');
+				window.location.href = "更新.html";
+			}
+
+			function fh() {
+
+
+				document.getElementById("content").style.display = "block";
+			}
+
+
+
+
+			function lsjl() {
+				window.location.href = "历史记录.html";
+			}
+			var ms = 1;
+			var bb1 = document.getElementById('ms1');
+			var bb2 = document.getElementById('ms2');
+			var bb5 = document.getElementById('ms3');
+			var bb6 = document.getElementById('ms4');
+			var bb7 = document.getElementById('ms5');
+			var bb8 = document.getElementById('ms6');
+			var bb9 = document.getElementById('ms7');
+			var bb3 = document.getElementById('yc1');
+			var bb4 = document.getElementById('yc2');
+			var bbb1 = document.getElementById('mms1');
+			var bbb2 = document.getElementById('mms2');
+			var bbb3 = document.getElementById('mms3');
+			var bbxl = document.getElementById('bxl');
+			var bbsj = document.getElementById('bsj');
+			bb1.disabled = false;
+			bb2.disabled = true;
+			bb5.disabled = false;
+			bb3.disabled = false;
+			bb4.disabled = true;
+			bb6.disabled = false;
+			bb7.disabled = true;
+			bb8.disabled = false;
+			bb9.disabled = true;
+			bbxl.disabled = false;
+			bbsj.disabled = false;
+			bbb1.disabled = true;
+			bbb2.disabled = false;
+			bbb3.disabled = false;
+			bb7.style.display = "none";
+			bb8.style.display = "none";
+			bb9.style.display = "none";
+
+			function ew() {
+				hd = true;
+				ksms = false;
+				xlms = false;
+				document.getElementById('sdxl').style.display = "block";
+				document.getElementById("sdsj").style.display = 'block';
+				bb1.disabled = true;
+				bb2.disabled = false;
+				bb5.disabled = false;
+				bb6.disabled = false;
+				szsj = 10000;
+				aa = 1;
+				jcsj();
+				mqms = "额外模式";
+			}
+
+			function pt() {
+				hd = false;
+				ksms = false;
+				xlms = false;
+				document.getElementById('sdxl').style.display = "block";
+				document.getElementById("sdsj").style.display = 'block';
+				bb1.disabled = false;
+				bb2.disabled = true;
+				bb5.disabled = false;
+				bb6.disabled = false;
+				szsj = 10000;
+				aa = 1;
+				jcsj();
+				mqms = "普通模式";
+			}
+
+			function ksu() {
+				hd = false;
+				ksms = true;
+				xlms = false;
+				document.getElementById('sdxl').style.display = "none";
+				document.getElementById("sdsj").style.display = 'none';
+				bb1.disabled = false;
+				bb2.disabled = false;
+				bb5.disabled = true;
+				bb6.disabled = false;
+				aa = 1;
+				szsj = 5000;
+				jcsj();
+				mqms = "快速模式";
+			}
+
+			function xl() {
+				hd = false;
+				ksms = false;
+				xlms = true;
+				document.getElementById('sdxl').style.display = "none";
+				document.getElementById("sdsj").style.display = 'block';
+				bb1.disabled = false;
+				bb2.disabled = false;
+				bb5.disabled = false;
+				bb6.disabled = true;
+				aa = 2;
+				szsj = 10000;
+				jcsj();
+				mqms = "血量模式";
+			}
+
+			function nl1() {
+				hd = false;
+				ksms = false;
+				xlms = false;
+				bbsj.disabled = false;
+				bb7.disabled = true;
+				bb8.disabled = false;
+				aa = 1;
+				szsj = 10000;
+				jcsj();
+				mqms = "能量模式1";
+			}
+
+			function nl2() {
+				hd = false;
+				ksms = false;
+				xlms = false;
+				bbsj.disabled = false;
+				bb7.disabled = false;
+				bb8.disabled = true;
+				aa = 1;
+				szsj = 10000;
+				jcsj();
+				mqms = "能量模式2";
+			}
+
+			function ls1() {
+				hd = false;
+				ksms = true;
+				xlms = false;
+				bbxl.disabled = true;
+				bbsj.disabled = true;
+				bb1.disabled = false;
+				bb2.disabled = false;
+				bb5.disabled = true;
+				bb6.disabled = false;
+				aa = 1;
+				szsj = 5000;
+				jcsj();
+				mqms = "快速模式连胜";
+			}
+
+			function mms(x) {
+				if (x == 1) {
+					bb1.style.display = "inline-block";
+					bb2.style.display = "inline-block";
+					bb5.style.display = "inline-block";
+					bb6.style.display = "inline-block";
+					bb7.style.display = "none";
+					bb8.style.display = "none";
+					bb9.style.display = "none";
+					bbb1.disabled = true;
+					bbb2.disabled = false;
+					bbb3.disabled = false;
+					ms = 1;
+
+					document.getElementById('sdxl').style.display = "block";
+					document.getElementById("sdsj").style.display = 'block';
+					pt();
+					jcsj();
+				}
+				if (x == 2) {
+					bb1.style.display = "none";
+					bb2.style.display = "none";
+					bb5.style.display = "none";
+					bb6.style.display = "none";
+					bb7.style.display = "inline-block";
+					bb8.style.display = "inline-block";
+					bb9.style.display = "none";
+					bbb1.disabled = false;
+					bbb2.disabled = true;
+					bbb3.disabled = false;
+					ms = 2;
+
+					//alert("能量模式规则请在选择能量模式的情况下点击查看规则查看")
+					nl1();
+					document.getElementById("jcsj").textContent = '基础时间' + szsj / 1000 + '秒';
+					document.getElementById('sdxl').style.display = "none";
+					document.getElementById("sdsj").style.display = 'block';
+				}
+				if (x == 3) {
+					bb1.style.display = "none";
+					bb2.style.display = "none";
+					bb5.style.display = "none";
+					bb6.style.display = "none";
+					bb7.style.display = "none";
+					bb8.style.display = "none";
+					bb9.style.display = "inline-block";
+					bbb1.disabled = false;
+					bbb2.disabled = false;
+					bbb3.disabled = true;
+					ms = 3;
+
+					//alert("能量模式规则请在选择能量模式的情况下点击查看规则查看")
+					ls1();
+					jcsj();
+					document.getElementById("jcsj").textContent = '基础时间' + szsj / 1000 + '秒';
+					document.getElementById('sdxl').style.display = "none";
+					document.getElementById("sdsj").style.display = 'none';
+				}
+			}
+
+			function yck() {
+				bb3.disabled = true;
+				bb4.disabled = false;
+				lscz = false;
+
+			}
+
+			function ycg() {
+				bb3.disabled = false;
+				bb4.disabled = true;
+				lscz = true;
+
+			}
+
+			function tz() {
+				window.location.href = "挑战选择.html";
+			}
+
+			function lx() {
+				window.location.href = "联机模式.html";
+			}
+
+			function check() {
+				aa = parseFloat(document.getElementById('set').value);
+				if (isNaN(aa) || aa <= 0) {
+					aa = 1;
+					alert("错误，请填写大于0的数字")
+				}
+
+				document.getElementById('set').value = '';
+				jcsj();
+			}
+
+			function chec() {
+				var sss = parseFloat(document.getElementById('set1').value);
+				if (isNaN(sss)) {
+					sss = 10;
+				}
+				szsj = sss * 1000;
+				if (szsj <= 0) {
+					szsj = 10000;
+					alert("错误，请填写大于0的数字")
+				}
+
+				document.getElementById('set1').value = '';
+				jcsj();
+			}
+			var hd = false;
+			var ksms = false;
+			var xlms = false;
+			var aa = 1;
+			var szsj = 10000;
+			var mqms = "普通模式";
+			var lscz = true;
+
+
+			function millisecondsToSeconds(milliseconds) {
+				return milliseconds / 1000;
+			}
+
+			function setItem() {
+				sessionStorage.setItem('hd', JSON.stringify(hd)); // 对象→JSON字符串
+				sessionStorage.setItem('ksms', JSON.stringify(ksms));
+				sessionStorage.setItem('bb130', JSON.stringify(bb130));
+				sessionStorage.setItem('aa', String(aa)); // 数字→字符串
+				sessionStorage.setItem('szsj', String(szsj));
+				sessionStorage.setItem('mqms', JSON.stringify(mqms)); // 对象→JSON字符串
+				sessionStorage.setItem('lscz', JSON.stringify(lscz));
+				sessionStorage.setItem('xlms', JSON.stringify(xlms)); // 对象→JSON字符串
+			}
+
+			function st() {
+				// 检查关键值是否存在
+				if (!sessionStorage.getItem('hd')) {
+					// 设置默认值
+					hd = false;
+					ksms = false;
+					xlms = false;
+					aa = 1;
+					szsj = 10000;
+					mqms = "普通模式";
+					lscz = true;
+					bb130 = false;
+				} else {
+					// 安全解析存储的值
+					try {
+						hd = JSON.parse(sessionStorage.getItem('hd'));
+					} catch {
+						hd = false;
+					}
+
+					try {
+						ksms = JSON.parse(sessionStorage.getItem('ksms'));
+					} catch {
+						ksms = false;
+					}
+
+					try {
+						lscz = JSON.parse(sessionStorage.getItem('lscz'));
+					} catch {
+						lscz = true;
+					}
+
+					try {
+						xlms = JSON.parse(sessionStorage.getItem('xlms'));
+					} catch {
+						xlms = false;
+					}
+					try {
+						bb130 = JSON.parse(sessionStorage.getItem('bb130'));
+					} catch {
+						bb130 = false;
+					}
+					// 处理数字类型
+					const storedAa = sessionStorage.getItem('aa');
+					aa = storedAa && !isNaN(storedAa) ? Number(storedAa) : 1;
+
+					const storedSzsj = sessionStorage.getItem('szsj');
+					szsj = storedSzsj && !isNaN(storedSzsj) ? Number(storedSzsj) : 10000;
+
+					// 处理字符串类型
+					try {
+						mqms = JSON.parse(sessionStorage.getItem('mqms'));
+					} catch {
+						mqms = "普通模式";
+					}
+				}
+
+				// 更新UI显示
+				jcsj();
+
+				// 根据当前模式更新按钮状态
+				if (mqms === "额外模式") ew();
+				else if (mqms === "快速模式") ksu();
+				else if (mqms === "血量模式") xl();
+				else pt();
+
+				// 更新隐藏数据按钮状态
+				if (lscz) ycg();
+				else yck();
+
+
+				if (!localStorage.getItem('bb130')) {
+					bb130 = false;
+				} else {
+					// 安全解析存储的值
+					try {
+						bb130 = JSON.parse(localStorage.getItem('bb130'));
+					} catch {
+						hd = false;
+					}
+				}
+			}
+
+			function jcsj() {
+				if (ms == 1) {
+					document.getElementById("jcsj").textContent = '基础血量' + aa + '，基础时间' + szsj / 1000 + '秒';
+				}
+				if (ms == 2) {
+					document.getElementById("jcsj").textContent = '基础时间' + szsj / 1000 + '秒';
+				}
+
+			}
+			window.onload = function() {
+				st();
+				bbgx();
+			};
+
+			function ks() {
+				var totalMilliseconds = szsj;
+				var remainingMilliseconds = totalMilliseconds;
+				var display = document.querySelector("#timer span");
+				var timerId = null; // 用于存储定时器ID
+
+				function updateTimer() {
+					if (remainingMilliseconds > 0) {
+						remainingMilliseconds -= 10; // 每次更新减少10毫秒（注意这里为了简化直接减少了10毫秒）
+						display.textContent = (remainingMilliseconds / 1000).toFixed(2); // 转换为秒并保留两位小数
+						timerId = setTimeout(updateTimer, 10); // 重新设置定时器
+					} else {
+						display.textContent = "0.00"; // 倒计时结束
+						// 可以在这里添加其他倒计时结束后的逻辑
+						// ...
+						document.getElementById('result').textContent = '你输了';
+						jz();
+					}
+				}
+
+				return {
+					start: function() {
+						if (timerId !== null) {
+							clearTimeout(timerId); // 如果定时器已经启动，先停止它
+						}
+						remainingMilliseconds = totalMilliseconds; // 重置剩余时间
+						display.textContent = (totalMilliseconds / 1000).toFixed(2); // 重置显示
+						timerId = setTimeout(updateTimer, 10); // 开始新的倒计时
+					},
+					reset: function() {
+						if (timerId !== null) {
+							clearTimeout(timerId); // 停止定时器
+							totalMilliseconds = szsj;
+							remainingMilliseconds = totalMilliseconds;
+							timerId = null; // 可选：将定时器ID重置为null，表示没有定时器在运行
+						}
+						// 注意：reset方法本身不重置剩余时间或重新开始计时器，它只是停止它
+						// 如果你想要在reset后立即开始一个新的计时器，你应该在调用reset之后立即调用start
+					}
+				};
+			}
+
+			// 使用
+			var timer = ks();
+
+
+
+			// 假设我们有一个倒计时，从3000毫秒（即3秒）开始
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>代号一联机模式</title>
+		<link rel="stylesheet" href="样式.css" />
+	</head>
+	<body>
+
+		<h1>☠️代号一☠️</h1>
+		<div id='content'>
+			<div id='dati'>
+				<h1>联机大厅</h1>
+				<p>两人通过浏览器点对点对战（无需服务器）。</p>
+				<p>一方点「创建房间」复制邀请码发给对方，另一方点「加入房间」粘贴邀请码并生成回复码发回，连接成功后自动进入游戏。</p>
+				<button onclick="cr()" class="login-btn" id="bcr" style="width:auto;padding:10px 20px;">创建房间</button>
+				<button onclick="jr()" class="login-btn" id="bjr" style="width:auto;padding:10px 20px;">加入房间</button>
+				<div id="bhb" style="display:none;">
+					<p>请把下方“邀请码”发给对方：</p>
+					<textarea id="txtgy" rows="6" cols="60" readonly></textarea>
+					<br>
+					<button onclick="copyTxt('txtgy')" class="bu">复制邀请码</button>
+					<p>复制对方的“回复码”后粘贴到下方，点击连接：</p>
+					<textarea id="txthd" rows="6" cols="60"></textarea>
+					<br>
+					<button onclick="hb()" class="login-btn" style="width:auto;padding:10px 20px;">连接</button>
+				</div>
+				<div id="bhd" style="display:none;">
+					<p>把对方的“邀请码”粘贴到下方，点击生成回复码：</p>
+					<textarea id="txtyq" rows="6" cols="60"></textarea>
+					<br>
+					<button onclick="hd()" class="login-btn" style="width:auto;padding:10px 20px;">生成回复码</button>
+					<p style="display:none;" id="hhb">请把下方“回复码”发回给对方：</p>
+					<textarea id="txthf" rows="6" cols="60" readonly style="display:none;"></textarea>
+					<br>
+					<button onclick="copyTxt('txthf')" class="bu" id="bhfcopy" style="display:none;">复制回复码</button>
+				</div>
+				<p id="conn"></p>
+				<button onclick="zy()" class="login-btn">返回主页</button>
+			</div>
+
+			<div id='yx' style="display:none;">
+				<p id='msms'>目前模式：联机模式</p>
+				<p id='mqhh'></p>
+				<div id="wjdw" style="display:none;">你是玩家<span id="wjbh"></span></div>
+				<p>请选择：</p>
+				<h4>经济招式</h4>
+				<button onclick="p('能量')" id="h1" style="disabled:true;">能量</button>
+				<button onclick="p('黑洞')" id="h10" style="display: inline-block;disabled:true;">黑洞</button>
+				<button onclick="p('绷带')" style="display: inline-block;disabled:true;" id="h13">绷带</button>
+				<button onclick="p('损血回能')" id="h15" style="display: inline-block;disabled:true;">损血回能</button>
+				<button onclick="p('损血加伤')" id="h16" style="display: inline-block;ddisabled:true;">损血加伤</button>
+				<br>
+				<h4>防御招式</h4>
+				<button onclick="p('防御')" id="h2" style="disabled:true;">防御</button>
+				<button onclick="p('能量防')" style="display: inline-block;disabled:true;" id="h8">能量防</button>
+				<button onclick="p('反弹')" id="h9" style="disabled:true;">反弹</button>
+				<br>
+				<h4>伤害招式</h4>
+				<button onclick="p('一发')" id="h3" style="disabled:true;">一发</button>
+				<button onclick="p('二发')" style="display: inline-block;disabled:true;" id="h4">二发</button>
+				<button onclick="p('三发')" style="display: inline-block;disabled:true;" id="h5">三发</button>
+				<button onclick="p('四发')" id="h11" style="display: inline-block;disabled:true;">四发</button>
+
+				<button onclick="p('炸弹')" style="display: inline-block;disabled:true;" id="h6">炸弹</button>
+				<button onclick="p('火炮')" id="h12" style="display: inline-block;disabled:true;">火炮</button>
+
+				<button onclick="p('刀')" id="h7" style="disabled:true;">刀</button>
+				<button onclick="p('剑')" id="h14" style="display: inline-block;disabled:true;">剑</button>
+
+
+				<div id="timer">倒计时: <span id="shijian">0.00</span> 秒</div>
+				<p id="sj"></p>
+				<p id="sj1"></p>
+				<p id="sjjj"></p>
+				<p id="result"></p>
+				<div id='cklscz1'>
+					<button onclick="cklscz()" id="cklscz">查看历史出招</button>
+				</div>
+				<p>请选择技能：</p>
+				<button onclick="ssss(0)" id="j0">不选择技能</button>
+				<p></p>
+				<div id='jnjn'>
+					<button onclick="ssss(1)" id="j1">快速炸弹</button>
+					<button onclick="ssss(2)" id="j2">先天</button>
+					<button onclick="ssss(3)" id="j3">高级能量</button>
+					<button onclick="ssss(4)" id="j4">热血</button>
+					<button onclick="ssss(5)" id="j5">空城</button>
+					<button onclick="ssss(6)" id="j6">嗜己</button>
+					<button onclick="ssss(7)" id="j7">白银狮子</button>
+					<button onclick="ssss(8)" id="j8">反伤</button>
+					<button onclick="ssss(9)" id="j9">能量刀</button>
+				</div>
+				<p></p>
+				<button onclick="cz()">重置</button>
+
+				<p id="sjj"></p>
+				<button onclick="zy()" class="login-btn">返回主页</button>
+				<button onclick="hl()" class="login-btn" style="margin-top:10px;">退出联机（返回大厅）</button>
+			</div>
+		</div>
+		<script src="运算逻辑.js"></script>
+		<script>
+			document.getElementById("h10").style.display = "none";
+			document.getElementById("h11").style.display = "none";
+			document.getElementById("h12").style.display = "none";
+			document.getElementById("h14").style.display = "none";
+			document.getElementById("h15").style.display = "none";
+			document.getElementById("h16").style.display = "none";
+			document.getElementById("content").style.display = "block";
+
+			function zy() {
+				window.location.href = "主页.html";
+			}
+
+			function copyTxt(id) {
+				var el = document.getElementById(id);
+				el.select();
+				el.setSelectionRange(0, 99999999);
+				var ok = false;
+				try {
+					ok = document.execCommand('copy');
+				} catch (e) {
+					ok = false;
+				}
+				if (navigator.clipboard && navigator.clipboard.writeText) {
+					navigator.clipboard.writeText(el.value).then(function() {
+						alert('已复制到剪贴板');
+					}, function() {
+						if (ok) {
+							alert('已复制到剪贴板');
+						} else {
+							alert('复制失败，请手动复制');
+						}
+					});
+				} else {
+					if (ok) {
+						alert('已复制到剪贴板');
+					} else {
+						alert('复制失败，请手动复制');
+					}
+				}
+			}
+
+			function hl() {
+				if (pc) {
+					try {
+						pc.close();
+					} catch (e) {}
+				}
+				pc = null;
+				dc = null;
+				ljReady = false;
+				document.getElementById('yx').style.display = 'none';
+				document.getElementById('dati').style.display = 'block';
+				document.getElementById('conn').textContent = '请先创建或加入房间';
+				document.getElementById('bcr').disabled = false;
+				document.getElementById('bjr').disabled = false;
+				document.getElementById('bhb').style.display = 'none';
+				document.getElementById('bhd').style.display = 'none';
+			}
+			var t1 = document.getElementById('h1');
+			var t2 = document.getElementById('h2');
+			var t3 = document.getElementById('h3');
+			var t4 = document.getElementById('h4');
+			var t5 = document.getElementById('h5');
+			var t6 = document.getElementById('h6');
+			var t7 = document.getElementById('h7');
+			var t8 = document.getElementById('h8');
+			var t9 = document.getElementById('h9');
+			var t10 = document.getElementById('h10');
+			var t11 = document.getElementById('h11');
+			var t12 = document.getElementById('h12');
+			var t13 = document.getElementById('h13');
+			var t14 = document.getElementById('h14');
+			var t15 = document.getElementById('h15');
+			var t16 = document.getElementById('h16');
+			var jj0 = document.getElementById('j0');
+			var jj1 = document.getElementById('j1');
+			var jj2 = document.getElementById('j2');
+			var jj3 = document.getElementById('j3');
+			var jj4 = document.getElementById('j4');
+			var jj5 = document.getElementById('j5');
+			var jj6 = document.getElementById('j6');
+			var jj7 = document.getElementById('j7');
+			var jj8 = document.getElementById('j8');
+			var jj9 = document.getElementById('j9');
+
+			var a1 = 1;
+			var aa1 = 0;
+			var aaa1 = 0;
+			var b1 = 0;
+			var c1 = 1;
+			var d1 = 0;
+			var e1 = 0;
+			var a2 = 1;
+			var aa2 = 0;
+			var aaa2 = 0;
+			var b2 = 0;
+			var c2 = 1;
+			var d2 = 0;
+			var e2 = 0;
+			var f1 = '';
+			var f2 = '';
+			var f3 = '';
+			var hh = 1;
+			var jn3 = new Array(10).fill(0);
+			var jn2 = new Array(10).fill(0);
+			var lscz1 = "";
+			var lscz2 = "";
+			var sxjs1 = true;
+			var sxjs2 = true;
+			var aa = 1;
+			var szsj = 10000;
+			var lscz = true;
+			var wj = 1;
+			var ljReady = false;
+			var mySkillSent = false;
+			var peerSkill = null;
+			var myMove = '';
+			var peerMove = '';
+			var started = false;
+
+			try {
+				aa = Number(sessionStorage.getItem('aa')) || 1;
+			} catch (e) {
+				aa = 1;
+			}
+			aaa1 = aa;
+			aaa2 = aa;
+
+			var pc = null;
+			var dc = null;
+
+			function connOk() {
+				document.getElementById('conn').textContent = '已连接';
+				document.getElementById('dati').style.display = 'none';
+				document.getElementById('yx').style.display = 'block';
+				document.getElementById('wjdw').style.display = 'block';
+				document.getElementById('wjbh').textContent = wj;
+				ljReady = true;
+				ss();
+				jnSkin();
+				j();
+			}
+
+			function delay(ms) {
+				return new Promise(function(r) {
+					setTimeout(r, ms);
+				});
+			}
+
+			async function jlpc() {
+				var config = {
+					iceServers: [{
+						urls: 'stun:stun.l.google.com:19302'
+					}]
+				};
+				try {
+					pc = new RTCPeerConnection(config);
+				} catch (e) {
+					pc = new RTCPeerConnection();
+				}
+			}
+
+			async function cr() {
+				document.getElementById('bcr').disabled = true;
+				document.getElementById('bjr').disabled = true;
+				wj = 1;
+				try {
+					await jlpc();
+					dc = pc.createDataChannel('yx');
+					setupDc();
+
+					var offer = await pc.createOffer();
+					await pc.setLocalDescription(offer);
+					await gatherWait();
+
+					document.getElementById('txtgy').value = JSON.stringify({
+						t: 'offer',
+						s: pc.localDescription
+					});
+					document.getElementById('bhb').style.display = 'block';
+				} catch (e) {
+					console.error(e);
+					alert('创建房间失败：' + e.message + '\n\nWebRTC 需要合法的 http/https 来源。请通过本地服务器或 GitHub Pages 访问本页面，不要在 file:// 下直接打开。');
+					document.getElementById('bcr').disabled = false;
+					document.getElementById('bjr').disabled = false;
+				}
+			}
+
+			async function jr() {
+				document.getElementById('bcr').disabled = true;
+				document.getElementById('bjr').disabled = true;
+				wj = 2;
+				await jlpc();
+				pc.ondatachannel = function(ev) {
+					dc = ev.channel;
+					setupDc();
+				};
+				document.getElementById('bhd').style.display = 'block';
+			}
+
+			function setupDc() {
+				dc.onopen = function() {
+					connOk();
+				};
+				dc.onmessage = function(ev) {
+					try {
+						var m = JSON.parse(ev.data);
+						handleMsg(m);
+					} catch (e) {}
+				};
+				dc.onclose = function() {
+					dccl();
+				};
+			}
+
+			function dccl() {
+				if (ljReady) {
+					alert('对方已断开连接');
+					hl();
+				}
+			}
+
+			async function gatherWait() {
+				if (pc.iceGatheringState === 'complete') {
+					return;
+				}
+				var done = false;
+				return new Promise(function(resolve) {
+					var t = setTimeout(function() {
+						done = true;
+						resolve();
+					}, 3000);
+					pc.onicegatheringstatechange = function() {
+						if (pc.iceGatheringState === 'complete' && !done) {
+							done = true;
+							clearTimeout(t);
+							resolve();
+						}
+					};
+				});
+			}
+
+			async function hb() {
+				try {
+					var data = JSON.parse(document.getElementById('txthd').value);
+					await pc.setRemoteDescription(data.s);
+					document.getElementById('conn').textContent = '正在建立连接...';
+				} catch (e) {
+					console.error(e);
+					alert('连接失败：' + e.message + '\n\nWebRTC 需要合法的 http/https 来源。请通过本地服务器或 GitHub Pages 访问本页面。');
+				}
+			}
+
+			async function hd() {
+				try {
+					var data = JSON.parse(document.getElementById('txtyq').value);
+					await pc.setRemoteDescription(data.s);
+					var answer = await pc.createAnswer();
+					await pc.setLocalDescription(answer);
+					await gatherWait();
+					document.getElementById('hhb').style.display = 'block';
+					var hf = document.getElementById('txthf');
+					hf.style.display = 'block';
+					hf.value = JSON.stringify({
+						t: 'answer',
+						s: pc.localDescription
+					});
+					document.getElementById('bhfcopy').style.display = 'inline-block';
+					document.getElementById('conn').textContent = '已生成回复码，发送给对方后等待连接...';
+				} catch (e) {
+					console.error(e);
+					alert('生成回复码失败：' + e.message + '\n\nWebRTC 需要合法的 http/https 来源。请通过本地服务器或 GitHub Pages 访问本页面。');
+				}
+			}
+
+			function sendMsg(o) {
+				if (dc && dc.readyState === 'open') {
+					dc.send(JSON.stringify(o));
+					return true;
+				}
+				return false;
+			}
+
+			function handleMsg(m) {
+				if (m.t === 'skill') {
+					jn2 = m.jn;
+					skillOk(jn2);
+				} else if (m.t === 'move') {
+					f2 = m.move;
+					roundOk();
+				} else if (m.t === 'reset') {
+					ss();
+				}
+			}
+
+			function csh() {
+				document.getElementById("h4").style.display = "inline-block";
+				document.getElementById("h5").style.display = "inline-block";
+				document.getElementById("h6").style.display = "inline-block";
+				document.getElementById("h8").style.display = "inline-block";
+				if (aa >= 3) {
+					document.getElementById("h13").style.display = "inline-block";
+				} else {
+					document.getElementById("h13").style.display = "none";
+				}
+				document.getElementById("h10").style.display = "none";
+				document.getElementById("h11").style.display = "none";
+				document.getElementById("h12").style.display = "none";
+				document.getElementById("h14").style.display = "none";
+				document.getElementById("h15").style.display = "none";
+				document.getElementById("h16").style.display = "none";
+				document.getElementById("jnjn").style.display = "block";
+			}
+
+			function ss() {
+				csh();
+				a1 = aa;
+				b1 = 0;
+				c1 = 1;
+				d1 = 0;
+				e1 = 0;
+				a2 = aa;
+				aaa1 = aa;
+				aaa2 = aa;
+				b2 = 0;
+				c2 = 1;
+				d2 = 0;
+				e2 = 0;
+				f1 = '';
+				f2 = '';
+				f3 = '';
+				lscz1 = "";
+				lscz2 = "";
+				hh = 1;
+				jn3 = new Array(10).fill(0);
+				jn2 = new Array(10).fill(0);
+				sxjs1 = true;
+				sxjs2 = true;
+				mySkillSent = false;
+				peerSkill = null;
+				myMove = '';
+				peerMove = '';
+				started = false;
+				document.getElementById("result").textContent = '';
+				timer.reset();
+				if (ljReady) {
+					jxInit();
+				}
+			}
+
+			function jxInit() {
+				jnSkin();
+				g();
+				j();
+			}
+
+			function jnSkin() {
+				jj3.disabled = false;
+				jj4.disabled = false;
+				jj5.disabled = false;
+				jj1.disabled = false;
+				jj2.disabled = false;
+				jj0.disabled = false;
+				jj6.disabled = false;
+				jj7.disabled = false;
+				jj8.disabled = false;
+				jj9.disabled = false;
+			}
+
+			function ks() {
+				var totalMilliseconds = szsj;
+				var remainingMilliseconds = totalMilliseconds;
+				var display = document.querySelector("#timer span");
+				var timerId = null;
+
+				function updateTimer() {
+					if (remainingMilliseconds > 0) {
+						remainingMilliseconds -= 10;
+						display.textContent = (remainingMilliseconds / 1000).toFixed(2);
+						timerId = setTimeout(updateTimer, 10);
+					} else {
+						display.textContent = "0.00";
+					}
+				}
+
+				return {
+					start: function() {
+						if (timerId !== null) {
+							clearTimeout(timerId);
+						}
+						remainingMilliseconds = totalMilliseconds;
+						display.textContent = (totalMilliseconds / 1000).toFixed(2);
+						timerId = setTimeout(updateTimer, 10);
+					},
+					reset: function() {
+						if (timerId !== null) {
+							clearTimeout(timerId);
+							totalMilliseconds = szsj;
+							remainingMilliseconds = totalMilliseconds;
+							timerId = null;
+						}
+					}
+				};
+			}
+			var timer = ks();
+
+			function ssss(jn1x) {
+				if (mySkillSent) {
+					return;
+				}
+				jn3[jn1x] = 1;
+				jj3.disabled = true;
+				jj4.disabled = true;
+				jj5.disabled = true;
+				jj1.disabled = true;
+				jj2.disabled = true;
+				jj0.disabled = true;
+				jj6.disabled = true;
+				jj7.disabled = true;
+				jj8.disabled = true;
+				jj9.disabled = true;
+				mySkillSent = true;
+				sendMsg({
+					t: 'skill',
+					jn: jn3
+				});
+				phaseCheck();
+			}
+
+			function skillOk(peerJn) {
+				peerSkill = peerJn;
+				jn2 = peerJn.slice();
+				phaseCheck();
+			}
+
+			function roundOk() {
+				peerMove = f2;
+				phaseCheck();
+			}
+
+			function phaseCheck() {
+				if (!ljReady) {
+					return;
+				}
+				if (!started) {
+					if (mySkillSent && peerSkill) {
+						started = true;
+						s();
+						return;
+					}
+					return;
+				}
+				if (myMove !== '' && peerMove !== '') {
+					jx();
+				}
+			}
+
+			function s() {
+				var la = a1,
+					lb = b1,
+					lc = c1;
+				if (jn3[2] === 1) {
+					b1 = 1;
+				}
+				if (jn2[2] === 1) {
+					b2 = 1;
+				}
+				if (jn3[4] === 1) {
+					a1 = 1.5 * aa;
+					aaa1 = 1.5 * aa;
+				}
+				if (jn2[4] === 1) {
+					a2 = 1.5 * aa;
+					aaa2 = 1.5 * aa;
+				}
+				if (jn3[6] === 1) {
+					a1 = aa / 2;
+				}
+				if (jn2[6] === 1) {
+					a2 = aa / 2;
+				}
+				g();
+				j();
+				document.getElementById("result").textContent = '';
+			}
+
+			function g() {
+				t1.disabled = false;
+				t2.disabled = false;
+				t9.disabled = false;
+				t3.disabled = true;
+				t4.disabled = true;
+				t5.disabled = true;
+				t6.disabled = true;
+				t7.disabled = true;
+				t8.disabled = true;
+				t10.disabled = true;
+				t11.disabled = true;
+				t12.disabled = true;
+				t13.disabled = true;
+				t14.disabled = true;
+				t15.disabled = true;
+				t16.disabled = true;
+				if (a1 > 0.5) {
+					t15.disabled = false;
+					if (sxjs1) {
+						t16.disabled = false;
+					}
+				}
+				if (b1 >= 1) {
+					t3.disabled = false;
+					t8.disabled = false;
+					t7.disabled = false;
+					if (a1 < aa && (jn3[4] == 0 && jn3[6] == 0)) {
+						t13.disabled = false;
+					}
+				}
+				if (b1 >= 2) {
+					t10.disabled = false;
+					t4.disabled = false;
+					t14.disabled = false;
+					if (jn3[1] === 1) {
+						t6.disabled = false;
+					}
+				}
+				if (b1 >= 3) {
+					t5.disabled = false;
+					t6.disabled = false;
+				}
+				if (b1 >= 4) {
+					t11.disabled = false;
+				}
+				if (b1 >= 5) {
+					t12.disabled = false;
+				}
+				if (c1 >= 1) {
+					t9.disabled = false;
+				} else if (c1 <= 0) {
+					t9.disabled = true;
+				}
+			}
+
+			function jnxs() {
+				document.getElementById("sjjj").textContent = '你的技能：';
+				if (jn3[0] == 1) {
+					document.getElementById("sjjj").textContent += '不选择技能，';
+				} else {
+					if (jn3[1] == 1) {
+						document.getElementById("sjjj").textContent += '快速炸弹，';
+					}
+					if (jn3[2] == 1) {
+						document.getElementById("sjjj").textContent += '先天，';
+					}
+					if (jn3[3] == 1) {
+						document.getElementById("sjjj").textContent += '高级能量，';
+					}
+					if (jn3[4] == 1) {
+						document.getElementById("sjjj").textContent += '热血，';
+					}
+					if (jn3[5] == 1) {
+						document.getElementById("sjjj").textContent += '空城，';
+					}
+					if (jn3[6] == 1) {
+						document.getElementById("sjjj").textContent += '嗜己，';
+					}
+					if (jn3[7] == 1) {
+						document.getElementById("sjjj").textContent += '白银狮子，';
+					}
+					if (jn3[8] == 1) {
+						document.getElementById("sjjj").textContent += '反伤，';
+					}
+					if (jn3[9] == 1) {
+						document.getElementById("sjjj").textContent += '能量刀，';
+					}
+				}
+				document.getElementById("sjjj").textContent += '对方技能：';
+				if (jn2[0] == 1) {
+					document.getElementById("sjjj").textContent += '不选择技能，';
+				} else {
+					if (jn2[1] == 1) {
+						document.getElementById("sjjj").textContent += '快速炸弹，';
+					}
+					if (jn2[2] == 1) {
+						document.getElementById("sjjj").textContent += '先天，';
+					}
+					if (jn2[3] == 1) {
+						document.getElementById("sjjj").textContent += '高级能量，';
+					}
+					if (jn2[4] == 1) {
+						document.getElementById("sjjj").textContent += '热血，';
+					}
+					if (jn2[5] == 1) {
+						document.getElementById("sjjj").textContent += '空城，';
+					}
+					if (jn2[6] == 1) {
+						document.getElementById("sjjj").textContent += '嗜己，';
+					}
+					if (jn2[7] == 1) {
+						document.getElementById("sjjj").textContent += '白银狮子，';
+					}
+					if (jn2[8] == 1) {
+						document.getElementById("sjjj").textContent += '反伤，';
+					}
+					if (jn2[9] == 1) {
+						document.getElementById("sjjj").textContent += '能量刀，';
+					}
+				}
+			}
+
+			function j() {
+				document.getElementById("sj").textContent = '你血' + a1 + '/' + aaa1 + ',敌血' + a2 + '/' + aaa2 + ',你能' + b1 +
+					',敌能' + b2;
+				document.getElementById("sj1").textContent = '你的出招:' + f3 + ',对方出招:' + f2;
+				jnxs();
+				document.getElementById("mqhh").textContent = '当前是第' + hh + "回合";
+				timer.reset();
+				timer.start();
+			}
+
+			function cklscz() {
+				alert("你的出招：" + lscz1 + "‖对手出招：" + lscz2)
+			}
+
+			function cz() {
+				ss();
+				sendMsg({
+					t: 'reset'
+				});
+			}
+
+			function p(f1x) {
+				if (!started || myMove !== '') {
+					return;
+				}
+				f1 = f1x;
+				f3 = f1;
+				myMove = f1;
+				document.getElementById('result').textContent = '已出招，等待对方...';
+				sendMsg({
+					t: 'move',
+					move: f1
+				});
+				phaseCheck();
+			}
+
+			function jx() {
+				var res = yunsan(a1, a2, b1, b2, lscz1, lscz2, c1, c2, sxjs1, sxjs2,
+					jn3, jn2, myMove, peerMove, aaa1, aaa2, 1, "正常模式");
+				a1 = res[0];
+				a2 = res[1];
+				b1 = res[2];
+				b2 = res[3];
+				lscz1 = res[4];
+				lscz2 = res[5];
+				c1 = res[6];
+				c2 = res[7];
+				sxjs1 = res[8];
+				sxjs2 = res[9];
+				f3 = myMove;
+				hh = hh + 1;
+				myMove = '';
+				peerMove = '';
+				if (a2 <= 0 && a1 > 0) {
+					document.getElementById('result').textContent = '你赢了';
+					jz();
+					return;
+				} else if (a1 <= 0 && a2 > 0) {
+					document.getElementById('result').textContent = '你输了';
+					jz();
+					return;
+				} else if (a2 <= 0 && a1 <= 0) {
+					document.getElementById('result').textContent = '平局';
+					jz();
+					return;
+				}
+				g();
+				j();
+			}
+
+			function jz() {
+				t3.disabled = true;
+				t4.disabled = true;
+				t5.disabled = true;
+				t6.disabled = true;
+				t7.disabled = true;
+				t8.disabled = true;
+				t1.disabled = true;
+				t2.disabled = true;
+				t9.disabled = true;
+				t10.disabled = true;
+				t11.disabled = true;
+				t12.disabled = true;
+				t13.disabled = true;
+				t14.disabled = true;
+				t15.disabled = true;
+				t16.disabled = true;
+				timer.reset();
+				document.getElementById("mqhh").textContent = '当前是第' + hh + "回合";
+			}
+
+			window.onload = function() {
+				ss();
+				g();
+				j();
+				document.getElementById('yx').style.display = 'none';
+				document.getElementById('dati').style.display = 'block';
+				document.getElementById('conn').textContent = '请先创建或加入房间';
+				if (location.protocol === 'file:') {
+					document.getElementById('conn').textContent = '⚠️ 当前通过 file:// 打开，WebRTC 会被浏览器拦截。请改用本地服务器访问（在 1.3.0 目录执行 python -m http.server 或 npx http-server），或部署到 GitHub Pages 后通过 https 访问。';
+				}
+			};
+		</script>
+
+	</body>
+</html>
