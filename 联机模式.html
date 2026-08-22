@@ -501,6 +501,11 @@
 				} else if (m.t === 'reset') {
 					alert('对方已重置对局，重新开始');
 					ss();
+				} else if (m.t === 'timeout') {
+					if (!gameOver) {
+						document.getElementById('result').textContent = '对方超时，你获胜';
+						jz();
+					}
 				} else if (m.t === 'cfg') {
 					mqms = m.mqms;
 					aa = m.aa;
@@ -663,6 +668,7 @@
 						timerId = setTimeout(updateTimer, 10);
 					} else {
 						display.textContent = "0.00";
+						timeout();
 					}
 				}
 
@@ -910,10 +916,23 @@
 				if (!gameOver) {
 					return;
 				}
-				ss();
 				sendMsg({
 					t: 'reset'
 				});
+				ss();
+			}
+
+			function timeout() {
+				if (!started || gameOver) {
+					return;
+				}
+				if (myMove === '') {
+					document.getElementById('result').textContent = '你超时判负';
+					sendMsg({
+						t: 'timeout'
+					});
+					jz();
+				}
 			}
 
 			function p(f1x) {
@@ -925,6 +944,7 @@
 				myShow = f1;
 				peerShow = '';
 				document.getElementById('result').textContent = '已出招，等待对方...';
+				timer.reset();
 				lockBtns();
 				sendMsg({
 					t: 'move',
